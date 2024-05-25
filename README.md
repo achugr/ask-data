@@ -20,6 +20,9 @@ Here are some examples of the queries you may ask:
 
 DAG (Directed Acyclic Graph) is a simple and natural way to describe a flow for solving a problem.
 Promptflow gives us an easy way to build/debug/run/evaluate the flow.
+
+Follow the installation [instructions](./ask-data-pf-dag/README.md).
+
 The flow definition looks like this.
 ![dag.png](assets/dag.png)
 
