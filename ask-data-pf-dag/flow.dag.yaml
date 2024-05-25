@@ -1,0 +1,112 @@
+$schema: https://azuremlschemas.azureedge.net/promptflow/latest/Flow.schema.json
+environment:
+  python_requirements_txt: requirements.txt
+inputs:
+  chat_history:
+    type: list
+    is_chat_history: true
+    default: []
+  question:
+    type: string
+    is_chat_input: true
+    default: what's the top five most expensive apartments in the UK?
+outputs:
+  answer:
+    type: string
+    reference: ${explain_result.output}
+    is_chat_output: true
+nodes:
+- name: generate_query
+  type: llm
+  source:
+    type: code
+    path: generate_query.jinja2
+  inputs:
+    deployment_name: gpt-35-turbo
+    max_tokens: 1000
+    temperature: 0.7
+    question: ${inputs.question}
+    table_info: ${show_table.output}
+    model: gpt-4o
+    table_name: ${choose_table.output}
+  connection: open_ai_connection
+  api: chat
+  activate:
+    when: ${question_valideness_check.output}
+    is: OK
+- name: show_table
+  type: python
+  source:
+    type: code
+    path: show_table.py
+  inputs:
+    table_name: ${choose_table.output}
+- name: choose_table
+  type: llm
+  source:
+    type: code
+    path: choose_table.jinja2
+  inputs:
+    tables_list: ${show_tables.output}
+    question: ${inputs.question}
+    model: gpt-4o
+    max_tokens: 1000
+  connection: open_ai_connection
+  api: chat
+- name: show_tables
+  type: python
+  source:
+    type: code
+    path: show_tables.py
+  inputs: {}
+- name: execute_query
+  type: python
+  source:
+    type: code
+    path: execute_query.py
+  inputs:
+    query: ${generate_query.output}
+    table_name: ${choose_table.output}
+  aggregation: false
+  activate:
+    when: ${question_valideness_check.output}
+    is: OK
+- name: explain_result
+  type: llm
+  source:
+    type: code
+    path: explain_result.jinja2
+  inputs:
+    model: gpt-4o
+    max_tokens: 1000
+    answer_csv: ${execute_query.output}
+    question: ${inputs.question}
+    repharse_suggestion: ${suggest_querstion_rephrase.output}
+  connection: open_ai_connection
+  api: chat
+- name: question_valideness_check
+  type: llm
+  source:
+    type: code
+    path: question_valideness_check.jinja2
+  inputs:
+    question: ${inputs.question}
+    model: gpt-4o
+    table_schema: ${show_table.output}
+  connection: open_ai_connection
+  api: chat
+- name: suggest_querstion_rephrase
+  type: llm
+  source:
+    type: code
+    path: suggest_querstion_rephrase.jinja2
+  inputs:
+    model: gpt-4o
+    question: ${inputs.question}
+    tables_list: ${show_tables.output}
+    table_schema: ${show_table.output}
+  connection: open_ai_connection
+  api: chat
+  activate:
+    when: ${question_valideness_check.output}
+    is: NOK

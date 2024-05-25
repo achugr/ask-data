@@ -1,0 +1,5 @@
+promptflow
+promptflow-tools
+promptflow-core
+keyrings.alt
+chdb

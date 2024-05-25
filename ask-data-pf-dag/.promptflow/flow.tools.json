@@ -1,0 +1,134 @@
+{
+  "package": {},
+  "code": {
+    "generate_query.jinja2": {
+      "type": "llm",
+      "inputs": {
+        "question": {
+          "type": [
+            "string"
+          ]
+        },
+        "table_name": {
+          "type": [
+            "string"
+          ]
+        },
+        "table_info": {
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "source": "generate_query.jinja2"
+    },
+    "show_table.py": {
+      "type": "python",
+      "inputs": {
+        "table_name": {
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "source": "show_table.py",
+      "function": "show_table"
+    },
+    "choose_table.jinja2": {
+      "type": "llm",
+      "inputs": {
+        "question": {
+          "type": [
+            "string"
+          ]
+        },
+        "tables_list": {
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "source": "choose_table.jinja2"
+    },
+    "show_tables.py": {
+      "type": "python",
+      "source": "show_tables.py",
+      "function": "show_tables"
+    },
+    "execute_query.py": {
+      "type": "python",
+      "inputs": {
+        "query": {
+          "type": [
+            "string"
+          ]
+        },
+        "table_name": {
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "source": "execute_query.py",
+      "function": "execute_query"
+    },
+    "explain_result.jinja2": {
+      "type": "llm",
+      "inputs": {
+        "question": {
+          "type": [
+            "string"
+          ]
+        },
+        "answer_csv": {
+          "type": [
+            "string"
+          ]
+        },
+        "repharse_suggestion": {
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "source": "explain_result.jinja2"
+    },
+    "question_valideness_check.jinja2": {
+      "type": "llm",
+      "inputs": {
+        "question": {
+          "type": [
+            "string"
+          ]
+        },
+        "table_schema": {
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "source": "question_valideness_check.jinja2"
+    },
+    "suggest_querstion_rephrase.jinja2": {
+      "type": "llm",
+      "inputs": {
+        "question": {
+          "type": [
+            "string"
+          ]
+        },
+        "tables_list": {
+          "type": [
+            "string"
+          ]
+        },
+        "table_schema": {
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "source": "suggest_querstion_rephrase.jinja2"
+    }
+  }
+}
