@@ -2,12 +2,29 @@
 
 Ask data is a project for asking structured data in a natural language.
 
+## Quickstart
+
+The easiest way to give it a try is to use GitHub Codespaces.
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/achugr/ask-data)
+There is a free quota, open the codespace, once loaded do this in the terminal:
+
+```shell
+cd ask-data-pf-dag
+pip install -r requirements.txt
+pf connection create -f openai.yaml --set api_key=YOUR_OPENAI_KEY
+pf flow serve --source . --port 8080 --host localhost
+```
+
+This will start the simple chat where you could ask the data in a natural language. Please remember that you pay for the
+LLM API.
+
 ## Data source
 
 The project uses [ClickHouse playground](https://play.clickhouse.com/play?user=play) as a data source, because it's
 free, fast and easy to use, plus it has variety of datasets from different areas.
 
 Here are some examples of the queries you may ask:
+
 - What's the top five most expensive apartments in the UK?
 - What are the months when COVID is most dangerous?
 - What is the average length of the taxi trip?
