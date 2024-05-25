@@ -4,8 +4,8 @@ Ask data is a project for asking structured data in a natural language.
 
 ## Quickstart
 
-The easiest way to give it a try is to use GitHub Codespaces.
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/achugr/ask-data)
+The easiest way to give it a try is to [![open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/achugr/ask-data)
+
 There is a free quota, open the codespace, once loaded do this in the terminal:
 
 ```shell
